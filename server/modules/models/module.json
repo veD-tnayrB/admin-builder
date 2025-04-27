@@ -1,0 +1,8 @@
+{
+	"name": "models",
+	"platforms": ["node"],
+	"ts": {
+		"path": "./",
+		"files": ["*"]
+	}
+}

@@ -1,0 +1,59 @@
+@mixin properties {
+	--primary: #1f3747;
+	--on-primary: #ffffff;
+	--primary-container: #bbced7;
+	--on-primary-container: #1f3747;
+
+	--secondary: #728693;
+	--on-secondary: #ffffff;
+	--secondary-container: #d8e2e2;
+	--on-secondary-container: #1f3747;
+
+	--tertiary: #bbced7;
+	--on-tertiary: #1f3747;
+	--tertiary-container: #60a5ff; // No encontrado en json.light.color - valor original mantenido
+	--on-tertiary-container: #000a47; // No encontrado en json.light.color - valor original mantenido
+
+	--background: #f0f4f5;
+	--on-background: #1f3747;
+	--surface: #ffffff;
+	--on-surface: #1f3747;
+
+	// --surface-variant: #cfcfd0;          // No encontrado directamente en json.light.color. Usando neutral-variant como posible mapeo:
+	--surface-variant: #f0f4f5;
+	// --on-surface-variant: #41474e;       // No encontrado en json.light.color - valor original mantenido
+
+	--outline: #b7b7c578; // No encontrado en json.light.color - valor original mantenido
+	--outline-variant: #c1c7cf; // No encontrado directamente en json.light.color. Usando neutral-variant como posible mapeo:
+	--outline-variant: #bcc7c8;
+
+	--error: #f44336;
+	--on-error: #ffffff;
+	--error-container: #ffdad6; // No encontrado en json.light.color - valor original mantenido
+	--on-error-container: #400002; // No encontrado en json.light.color - valor original mantenido
+
+	// --- Variables mantenidas del mixin original (no encontradas en el JSON 'light') ---
+	--success: #008e3c;
+	--on-success: #ffffff;
+	--success-container: #58c68c;
+	--on-success-container: #002204;
+
+	--warning: #ba5000;
+	--on-warning: #ffffff;
+	--warning-container: #f3a757;
+	--on-warning-container: #422400;
+
+	--info: #005fa4;
+	--on-info: #ffffff;
+	--info-container: #3ca3ff;
+	--on-info-container: #002025;
+
+	--primary-shadow: 0px 2px 8px #58585833;
+	--secondary-shadow: -5px 12px 2px 3px #58585833;
+	--modal-background-color: rgba(0, 0, 0, 0.5);
+
+	// --- Nuevas variables añadidas desde el JSON 'light' ---
+	--neutral: #f5f7f7;
+	--on-neutral: #1f3747;
+	// --neutral-variant ya está mapeado arriba a --surface-variant / --outline-variant
+}

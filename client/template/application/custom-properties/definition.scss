@@ -1,0 +1,30 @@
+@use 'dark';
+@use 'light';
+@import 'palette';
+@import 'neutral-palette';
+
+:root {
+	--font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+		Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+	--secondary-font-family: 'Roboto', sans-serif;
+	--title-font: 'Inter', sans-serif;
+	--brand-font: 'Raleway', sans-serif;
+	--border-primary: 10px;
+	--border-secondary: 8px;
+	--border-tertiary: 5px;
+	--border-radius-base: 1rem;
+
+	@include neutral-palette();
+	@include light.properties();
+	@media (prefers-color-scheme: light) {
+		@include light.properties();
+	}
+}
+
+html[data-beyond-mode='light'] {
+	@include light.properties();
+}
+
+html[data-beyond-mode='dark'] {
+	@include dark.properties();
+}

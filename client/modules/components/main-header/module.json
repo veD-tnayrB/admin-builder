@@ -1,0 +1,13 @@
+{
+	"name": "components/main-header",
+	"code": {
+		"scss": {
+			"path": "/code/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/code/ts",
+			"files": ["*"]
+		}
+	}
+}

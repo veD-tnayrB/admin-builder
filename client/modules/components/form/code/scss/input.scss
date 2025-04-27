@@ -1,0 +1,11 @@
+.custom-input {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	position: relative;
+	width: fit-content;
+
+	.pui-input {
+		width: 100%;
+	}
+}

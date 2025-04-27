@@ -1,0 +1,26 @@
+.essential-spinner-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&:not(:has(.brand)) {
+		min-height: 85vh;
+	}
+
+	.brand {
+		width: 5rem;
+		height: 5rem;
+		aspect-ratio: 1/1;
+	}
+
+	.brand-name {
+		font-family: var(--brand-font);
+		font-size: 1.5rem;
+
+		.sub-name {
+			font-family: var(--brand-font);
+			font-weight: normal;
+		}
+	}
+}

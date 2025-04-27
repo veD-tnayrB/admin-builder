@@ -1,0 +1,21 @@
+.descriptor {
+	cursor: pointer;
+	position: relative;
+	top: 0.9rem;
+
+	svg {
+		width: 16px;
+	}
+
+	.content {
+		position: absolute;
+		bottom: 100%;
+		right: 50%;
+		background: var(--surface);
+		box-shadow: var(--primary-shadow);
+		border-radius: 8px;
+		padding: 0.5rem;
+		font-size: 0.8rem;
+		width: 250px;
+	}
+}

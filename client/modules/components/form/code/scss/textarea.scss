@@ -1,0 +1,10 @@
+.custom-textarea {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	position: relative;
+	width: 100%;
+	.pui-textarea {
+		width: 100%;
+	}
+}
