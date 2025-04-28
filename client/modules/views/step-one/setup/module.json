@@ -1,5 +1,5 @@
 {
-	"name": "step-one/setup",
+	"name": "views/step-one/setup",
 	"txt": {
 		"path": "/txt",
 		"files": "*"

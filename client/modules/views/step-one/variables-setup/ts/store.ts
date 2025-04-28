@@ -2,7 +2,6 @@ import { routing } from '@beyond-js/kernel/routing';
 import { MultilanguageStore } from '@essential/builder/helpers';
 import { Project } from '@essential/builder/models';
 import { module } from 'beyond_context';
-import { v4 as uuid } from 'uuid';
 import { ITexts, IValues } from './types';
 
 export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
@@ -14,13 +13,8 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 	}
 
 	#values: IValues = {
-		name: '',
-		subName: '',
-		scope: '',
-		description: '',
-		author: '',
-		keywords: '',
-		title: '',
+		dark: '',
+		light: '',
 	};
 	get values() {
 		return this.#values;
@@ -58,19 +52,19 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 	load = async (projectId: string) => {
 		try {
 			this.ready = false;
+
 			if (!projectId) {
-				this.#projectId = uuid();
-				window.history.replaceState(
-					{},
-					'',
-					window.location.pathname + '?projectId=' + this.#projectId
-				);
+				routing.pushState('/');
 				return;
 			}
+
 			this.#projectId = projectId;
-			const res = await this.#item.load({ id: this.#projectId });
+			await this.#item.set({ id: this.#projectId });
+			await this.#item.load({ id: this.#projectId });
+			console.log('item:', this.#item);
+			this.#values = this.#item.variables;
+			console.log('vals: ', this.#values);
 			this.triggerEvent();
-			this.#values = res;
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -83,6 +77,9 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 			this.fetching = true;
 			this.error = '';
 			this.triggerEvent();
+			const params = { variables: this.#values, id: this.#projectId };
+			console.log('params: ', params);
+			await this.#item.set(params);
 			const err = this.checkErrors();
 			if (err) {
 				this.error = err;
@@ -90,16 +87,16 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 				return;
 			}
 
-			const params = { ...this.#values, id: this.#projectId };
-			await this.#item.set(params);
-			await this.#item.publish(params);
+			// const response = await this.#item.publish(params);
+			console.log(this.texts.success);
 			this.success = this.texts.success;
-			this.triggerEvent();
 			setTimeout(() => {
 				this.fetching = false;
-				const url = `/variables-setup?projectId=${this.#projectId}`;
-				routing.pushState(url);
+				// const url = `/variables-setup?projectId=${this.#projectId}`;
+				// routing.pushState(url);
 			}, 3000);
+
+			this.triggerEvent();
 		} catch (error) {
 			console.error(error);
 			this.error = this.texts.errors.somethingWentWrong;
@@ -110,31 +107,15 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 	checkErrors = () => {
 		const values = this.#values;
 		const errors = this.texts.errors;
-		if (!values.name) return errors.missingName;
-		if (values.subName.split(' ').length > 1) return errors.invalidSubName;
-		const invalidScope = !/^@[a-z][a-z0-9]*$/.test(values.scope);
-		if (invalidScope) return errors.invalidScope;
-		if (!values.title) return errors.missingTitle;
-		if (!values.author) return errors.missingAuthor;
-		if (!values.keywords) return errors.missingKeywords;
-		const keywordRegex = /^[a-zA-Z0-9ñÑ\s]+(,\s*[a-zA-Z0-9ñÑ\s]+)*$/;
-		const invalidKeywords = !keywordRegex.test(values.keywords);
-
-		// Agrega validación de campo vacío primero
-		if (!values.keywords.trim()) return errors.missingKeywords;
-		if (invalidKeywords) return errors.invalidKeywords;
+		if (!values.dark) return errors.missingDark;
+		if (!values.light) return errors.missingLight;
 		return '';
 	};
 
 	reset = () => {
 		this.#values = {
-			name: '',
-			subName: '',
-			scope: '',
-			description: '',
-			author: '',
-			keywords: '',
-			title: '',
+			dark: '',
+			light: '',
 		};
 
 		this.triggerEvent();
@@ -146,5 +127,17 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 		const { name, value } = event.target;
 		this.#values = { ...this.#values, [name]: value };
 		this.triggerEvent();
+	};
+
+	downloadTemplate = async () => {
+		try {
+			const res = await this.#item.getThemeTemplates({
+				id: this.#projectId,
+			});
+			console.log('downlooad template: ', res);
+		} catch (error) {
+			this.error = error;
+			console.error(error);
+		}
 	};
 }

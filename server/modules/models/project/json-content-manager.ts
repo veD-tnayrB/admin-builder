@@ -44,13 +44,12 @@ export class JSONContentManager {
 	 * Read and parse JSON file
 	 * @param path File path
 	 */
-	private async read(path: string): Promise<IConfig> {
+	async read(path: string) {
 		try {
 			const content = await fs.readFile(path, 'utf-8');
 			return JSON.parse(content);
 		} catch (error) {
-			console.error(`Error reading ${path}:`, error);
-			throw new Error('CONFIG_READ_ERROR');
+			return null;
 		}
 	}
 
@@ -96,11 +95,11 @@ export class JSONContentManager {
 	/**
 	 * Write updated config to file
 	 * @param path File path
-	 * @param config Updated config object
+	 * @param data data object
 	 */
-	private async write(path: string, config: IConfig): Promise<void> {
+	async write(path: string, data: Object): Promise<void> {
 		try {
-			const content = JSON.stringify(config, null, 2);
+			const content = JSON.stringify(data, null, 2);
 			await fs.writeFile(path, content, 'utf-8');
 		} catch (error) {
 			console.error(`Error writing ${path}:`, error);

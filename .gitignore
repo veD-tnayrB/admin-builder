@@ -42,3 +42,4 @@ compile.sh
 __*.exe
 *.exe
 instances
+instances/*

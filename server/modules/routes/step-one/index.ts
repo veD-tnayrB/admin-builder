@@ -13,11 +13,12 @@ export class StepOneRoutes {
 				author: req.body.author,
 				keywords: req.body.keywords,
 				title: req.body.title,
+				variables: req.body.variables,
 			};
 			const instance = new Project(params);
 			const validationErr = instance.validate();
 			if (validationErr) throw validationErr;
-			const response = await instance.initialize();
+			const response = await instance.setup();
 			if (!response.status) throw response.error;
 
 			return res.status(200).json(response);
@@ -27,8 +28,41 @@ export class StepOneRoutes {
 		}
 	};
 
+	getThemesTemplate = async (req: Request, res: Response) => {
+		try {
+			const id = req.params.id;
+			if (!id) throw 'ID_REQUIRED';
+
+			const instance = new Project();
+			await instance.load(id);
+			const response = await instance.getThemeVariables();
+			res.attachment(`theme.scss`);
+			res.contentType('text/scss');
+			return res.send(response.data.file);
+		} catch (error) {
+			console.error('ERROR: /get-themes-template ', error);
+			return res.status(500).send({ status: false, error });
+		}
+	};
+
+	get = async (req: Request, res: Response) => {
+		try {
+			const id = req.params.id;
+			if (!id) throw 'ID_REQUIRED';
+
+			const instance = new Project();
+			const response = await instance.load(id);
+			return res.status(200).json(response);
+		} catch (error) {
+			console.error('ERROR: /get ', error);
+			return res.status(500).send({ status: false, error });
+		}
+	};
+
 	init = (app: Application) => {
-		app.post('/setup', this.setup);
+		app.post('/project', this.setup);
+		app.get('/project/themes/template/:id', this.getThemesTemplate);
+		app.get('/project/:id', this.get);
 	};
 }
 
