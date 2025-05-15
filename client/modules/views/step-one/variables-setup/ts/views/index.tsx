@@ -6,16 +6,18 @@ import { IContext, VariablesSetupContext } from '../context';
 import { StoreManager } from '../store';
 import { Form } from './form';
 import { ResetModal } from './reset-modal';
+import { SyntaxErrors } from './syntax-errors';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }): JSX.Element {
 	const [, setUpdate] = React.useState({});
-
 	useBinder([store], () => setUpdate({}));
 
 	const onToggleResetModal = () => {
 		store.resetModal = !store.resetModal;
 	};
+
+	if (!store.isReady) return null;
 
 	const contextValue: IContext = {
 		store,
@@ -30,6 +32,7 @@ function View({ store }: { store: StoreManager }): JSX.Element {
 					<Alert type="success" message={store.success} />
 				)}
 				{store.error && <Alert type="error" message={store.error} />}
+				<SyntaxErrors />
 				<Form />
 				{store.resetModal && <ResetModal />}
 			</div>

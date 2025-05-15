@@ -66,26 +66,28 @@ export /*bundle*/ class Project {
 		const configFilePath = `./instances/${this.id}/config.json`;
 		const content = await this.#jsonContentManager.read(configFilePath);
 
-		if (!content) {
-			const parameterRes = await this.setParameters();
-			if (!parameterRes.status) return parameterRes;
-
-			await this.saveChanges();
+		if (content) {
+			this.load(this.id);
 			return {
 				status: true,
 				data: { id: this.id, repo: content.repoUrl },
 			};
 		}
 
+		console.log(`Initializing project: ${this.id}`);
 		await fs.promises.mkdir('./instances', { recursive: true });
-		await fs.promises.mkdir(`./instances/${this.id}`, { recursive: true });
+		await fs.promises.mkdir(this.outputDir, { recursive: true });
+		console.log('Clonning base repo...');
 		const clone = await RepoManager.clone(outputDir);
 		if (!clone.status) return clone;
 
+		console.log('Setting initial parametters...');
 		const parameterRes = await this.setParameters();
 		if (!parameterRes.status) return parameterRes;
 
 		const projectName = this.scope.replace('@', '');
+
+		console.log('Publishing repo...');
 		const publishRes = await RepoManager.setupRepo(
 			projectName,
 			this.description,
@@ -94,6 +96,7 @@ export /*bundle*/ class Project {
 		if (!publishRes.status) return publishRes;
 		this.repoUrl = publishRes.repoUrl;
 
+		console.log('Saving changes...');
 		await this.saveChanges();
 		return {
 			status: true,
@@ -145,10 +148,11 @@ export /*bundle*/ class Project {
 
 	load = async (id: string) => {
 		if (!id) return { status: false, error: 'ID_REQUIRED' };
-		const configFilePath = `./instances/${id}/config.json`;
+		this.outputDir = `./instances/${id}`;
+		const configFilePath = `${this.outputDir}/config.json`;
 
 		const content = await this.#jsonContentManager.read(configFilePath);
-		if (!content) return { status: true, data: {} };
+		if (!content) return { status: false, error: 'NOT_FOUND' };
 		this.id = content.id;
 		this.name = content.name;
 		this.subName = content.subName;
@@ -168,5 +172,54 @@ export /*bundle*/ class Project {
 
 	remove = async () => {
 		return fs.promises.rm(this.outputDir, { recursive: true, force: true });
+	};
+
+	setTheme = (variables: { dark: string; light: string }) => {
+		console.log('set themes: ', variables);
+		if (!variables.dark) throw 'DARK_THEME_VARIABLES_REQUIRED';
+		if (!variables.light) throw 'LIGHT_THEME_VARIABLES_REQUIRED';
+
+		const errors: {
+			dark: string | { line: string; idx: number }[];
+			light: string | { line: string; idx: number }[];
+		} = {
+			dark: [],
+			light: [],
+		};
+
+		const isDarkOk = this.#scssContentManager.validateThemeVariables(
+			variables.dark
+		);
+		if (!isDarkOk.status && isDarkOk.error) {
+			errors.dark = isDarkOk.error;
+		}
+
+		const isLightOk = this.#scssContentManager.validateThemeVariables(
+			variables.light
+		);
+		if (!isLightOk.status && isLightOk.error) {
+			errors.light = isLightOk.error;
+		}
+
+		if (!isLightOk.status || !isDarkOk.status) {
+			return { status: false, error: errors };
+		}
+
+		const lightThemePath = `${this.outputDir}/client/template/application/custom-properties/_light.scss`;
+		const darkThemePath = `${this.outputDir}/client/template/application/custom-properties/_dark.scss`;
+
+		this.#scssContentManager.writeThemeVariable(
+			lightThemePath,
+			variables.light
+		);
+
+		this.#scssContentManager.writeThemeVariable(
+			darkThemePath,
+			variables.dark
+		);
+		this.variables = variables;
+		this.saveChanges();
+
+		return { status: true };
 	};
 }

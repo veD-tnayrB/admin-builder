@@ -147,7 +147,10 @@ export /*bundle*/ class RepoManager {
 	): Promise<{ status: boolean; repoUrl?: string; error?: string }> => {
 		// 1. Create GitHub repo
 		const creation = await this.create(projectName, description);
-		if (!creation.status) return creation;
+		if (!creation.status) {
+			console.error('Error creating the repo: ', creation);
+			return creation;
+		}
 
 		// 3. Push to new repo
 		const push = await this.push(

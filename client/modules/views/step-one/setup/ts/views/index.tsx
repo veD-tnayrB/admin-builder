@@ -12,7 +12,6 @@ function View({ store }: { store: StoreManager }): JSX.Element {
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}));
 
-	console.log('store.isReady: ', store.texts);
 	if (!store.isReady) return null;
 
 	const onToggleResetModal = () => {

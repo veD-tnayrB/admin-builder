@@ -1,9 +1,9 @@
 import { ConfirmModal } from '@essential/builder/components/modal';
 import React from 'react';
-import { useSetupContext } from '../context';
+import { useVariablesSetupContext } from '../context';
 
 export const ResetModal = () => {
-	const { store, onToggleResetModal } = useSetupContext();
+	const { store, onToggleResetModal } = useVariablesSetupContext();
 
 	const modal = store.texts.modals.reset;
 	const options = {

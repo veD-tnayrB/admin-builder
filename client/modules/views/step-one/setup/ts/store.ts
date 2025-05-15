@@ -104,6 +104,8 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 			console.error(error);
 			this.error = this.texts.errors.somethingWentWrong;
 			this.triggerEvent();
+		} finally {
+			this.fetching = false;
 		}
 	};
 

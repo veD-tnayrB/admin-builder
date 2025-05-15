@@ -63,5 +63,70 @@
 			"somethingWentWrong": "Algo salio mal mientras intentabamos guardar el proyecto, contacte con un administrador inmediatamente"
 		},
 		"success": "Proyecto creado correctamente"
+	},
+	"en": {
+		"title": "Creacion de proyecto",
+		"labels": {
+			"name": {
+				"value": "Nombre del proyecto",
+				"info": "Este es el nombre que aparecera en la sidebar y los emails enviados del proyecto, aca se permite poner mayusculas indiscriminadamente, Ej. 'SIPEC', 'Aroalign', 'Trademarket'",
+				"placeholder": "Aroalign"
+			},
+			"subName": {
+				"value": "Sub nombre del proyecto",
+				"info": "Este valor es opcional y es usado por si el proyecto tiene una segunda parte, ESTE VALOR NO DEBE SER USADO PARA DESCRIPCIONES LARGAS, Ej de uso correcto: 'Desktop', 'Admin', 'Backoffice', Ej uso incorrecto: 'Servicios a todo el mundo', 'Tu asesora de confianza', etc",
+				"placeholder": "Backoffice"
+			},
+			"scope": {
+				"value": "Scope del proyecto",
+				"info": "Este valor representa el scope del proyecto, es un valor INTERNO (no se vera reflejado en ninguna parte del proyecto, solo en el codigo) se usa para definir el nombre del paquete, debe ir de la mano con el nombre del proyecto y siempre debe comenzar con un '@' Ej. '@aroalign', '@sipec', '@trademarket', el scope NO DEBE INCLUIR EL SUB NOMBRE DEL PROYECTO, SOLO EL NOMBRE PRINCIPAL, preferiblemente debe ser una palabra, NO DEBE CONTENER ESPACIOS NI GUIONES POR COMODIDAD DURANTE EL DESARROLLO, Ej uso incorrecto: 'sipec-desktop', '@SIPEC', '@Trademarket', 'Trademarket Tabacalera'",
+				"placeholder": "@aroalign"
+			},
+			"title": {
+				"value": "Titulo de la pagina",
+				"info": "Este valor sirve para especificar el titulo que va a tener la pagina en la tab del navegador, normalmente se usan palabras simples o el nombre del proyecto pero no hay limitaciones en este aspecto, Ej. 'SIPEC', 'Aroalign - Servicios de odontologia'",
+				"placeholder": "Aroalign"
+			},
+			"description": {
+				"value": "Descripcion de la pagina",
+				"info": "Este valor va a aparecer al buscar la pagina en internet mediante un navegador, es la descripcion de la pagina y es usado por los search engines para encontrar las paginas mas facil mediante un sistema de palabras claves, no hay limitaciones en el tamanio se recomienda usar palabras claves como valor ademas de que la descripcion debe especificar que hace el sistema para mas claridad a los visitantes.",
+				"placeholder": "Descubra una plataforma de gestión integral diseñada para agilizar tareas administrativas complejas en múltiples módulos. Nuestro sólido sistema ofrece una solución dinámica y escalable para la gestión de perfiles de usuario, la configuración de widgets y el control de permisos, garantizando un funcionamiento seguro y eficiente. Personalice las experiencias de los usuarios con configuraciones..."
+			},
+			"author": {
+				"value": "Autor de la pagina",
+				"info": "El valor de Autor de la pagina es como el crédito de un libro en una página web: indica quién creó el contenido. Es útil para dar reconocimiento al autor, facilitar el contacto si hay dudas o colaboraciones, y aportar transparencia sobre el origen de la información. Por ejemplo, en un sitio de recetas, podría decir, lo que ayuda a los usuarios a confiar en la fuente. Aunque no afecta el posicionamiento en buscadores, es una práctica profesional que organiza el contenido y clarifica responsabilidades.",
+				"placeholder": "Baleares group"
+			},
+			"keywords": {
+				"value": "Keywords de la pagina",
+				"info": "Son palabras clave que resumen el tema principal del contenido. Ayudan a los buscadores y sistemas internos a entender rápidamente de qué trata la página, aunque hoy los motores de búsqueda modernos (como Google) ya no las usan directamente para posicionar. Aun así, sirven como guía para organizar contenido o en herramientas de gestión. Por ejemplo, en un blog de viajes, palabras como 'destinos turísticos, consejos para viajar, vacaciones baratas' orientan sobre el enfoque del sitio, lo que puede ser útil para equipos que trabajan en el contenido o sistemas que clasifican información. Es una práctica heredada que, si se usa, debe hacerse con términos relevantes y honestos. IMPORTANTE: SEPARAR CADA KEYWORD POR UNA COMA ','",
+				"placeholder": "admin, administrator, dashboard, widgets managment, users management, notifications managment, profiles managment, dinamyc administrator, dinamyc dashboard, task administrator, permission managment, permissions, modules managment, configurable dashboard"
+			}
+		},
+		"actions": {
+			"save": "Guardar",
+			"reset": "Limpiar"
+		},
+		"modals": {
+			"reset": {
+				"title": "Estas seguro?",
+				"description": "Estas apunto de perder todo tu progreso, todo la informacion que has establecido sera eliminada permanentemente.",
+				"actions": {
+					"cancel": "Cancelar, no borrar",
+					"confirm": "Si, limpiar todo"
+				}
+			}
+		},
+		"errors": {
+			"missingName": "El Nombre del proyecto es requerido.",
+			"invalidSubName": "El sub nombre del proyecto no puede ser usado para descripciones largas, solo una palabra.",
+			"invalidScope": "El scope del proyecto no puede llevar guiones, ni espacios, debe comenzar con arroba '@', tampoco debe llevar mayusculas.",
+			"missingTitle": "El titulo de la pagina es requerido.",
+			"missingAuthor": "El autor de la pagina es requerido.",
+			"missingKeywords": "Las keywords son requeridas.",
+			"invalidKeywords": "Las keywords deben ser varias y deben estar separadas por coma ','",
+			"somethingWentWrong": "Algo salio mal mientras intentabamos guardar el proyecto, contacte con un administrador inmediatamente"
+		},
+		"success": "Proyecto creado correctamente"
 	}
 }

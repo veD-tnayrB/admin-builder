@@ -22,6 +22,10 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 
 	success: string = '';
 	error: string = '';
+	syntaxError: {
+		theme: 'dark' | 'light';
+		errors: { line: string; idx: string }[];
+	} = { theme: 'dark', errors: [] };
 
 	#resetModal: boolean = false;
 	get resetModal() {
@@ -60,7 +64,12 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 
 			this.#projectId = projectId;
 			await this.#item.set({ id: this.#projectId });
-			await this.#item.load({ id: this.#projectId });
+			const response = await this.#item.load({ id: this.#projectId });
+			if (!response.status && response.error === 'NOT_FOUND') {
+				routing.pushState('/');
+				return;
+			}
+			console.log('response  ', response);
 			console.log('item:', this.#item);
 			this.#values = this.#item.variables;
 			console.log('vals: ', this.#values);
@@ -76,6 +85,8 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 		try {
 			this.fetching = true;
 			this.error = '';
+			this.success = '';
+			this.syntaxError = { theme: 'dark', errors: [] };
 			this.triggerEvent();
 			const params = { variables: this.#values, id: this.#projectId };
 			console.log('params: ', params);
@@ -87,20 +98,64 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 				return;
 			}
 
-			// const response = await this.#item.publish(params);
-			console.log(this.texts.success);
-			this.success = this.texts.success;
-			setTimeout(() => {
-				this.fetching = false;
-				// const url = `/variables-setup?projectId=${this.#projectId}`;
-				// routing.pushState(url);
-			}, 3000);
+			const response = await this.#item.setTheme(params);
 
+			console.log('res: ', response);
+			if (!response.status) {
+				if (
+					response.error.hasOwnProperty('dark') ||
+					response.error.hasOwnProperty('light')
+				) {
+					if (typeof response.error.dark === 'string') {
+						this.error = response.error.dark;
+						return;
+					}
+					if (typeof response.error.light === 'string') {
+						this.error = response.error.light;
+						return;
+					}
+
+					if (
+						Array.isArray(response.error.dark) &&
+						response.error.dark.length
+					) {
+						this.error = '';
+						this.syntaxError = {
+							theme: 'dark',
+							errors: response.error.dark,
+						};
+
+						this.triggerEvent();
+						console.log('this.syntax error: ', this.syntaxError);
+					}
+
+					if (
+						Array.isArray(response.error.light) &&
+						response.error.light.length
+					) {
+						this.error = '';
+						this.syntaxError = {
+							theme: 'light',
+							errors: response.error.light,
+						};
+						this.triggerEvent();
+					}
+
+					return;
+				}
+
+				this.error = response.error;
+				return;
+			}
+
+			this.success = this.texts.success;
 			this.triggerEvent();
 		} catch (error) {
 			console.error(error);
 			this.error = this.texts.errors.somethingWentWrong;
 			this.triggerEvent();
+		} finally {
+			this.fetching = false;
 		}
 	};
 

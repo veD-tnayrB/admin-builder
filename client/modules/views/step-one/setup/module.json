@@ -1,6 +1,7 @@
 {
 	"name": "views/step-one/setup",
 	"txt": {
+		"multilanguage": true,
 		"path": "/txt",
 		"files": "*"
 	},
@@ -11,7 +12,7 @@
 			"name": "home-page"
 		},
 		"ts": {
-			"path": "./",
+			"path": "/ts",
 			"files": ["*"]
 		}
 	}

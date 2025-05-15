@@ -59,8 +59,34 @@ export class StepOneRoutes {
 		}
 	};
 
+	setTheme = async (req: Request, res: Response) => {
+		try {
+			const id = req.params.id;
+			if (!id) throw 'ID_REQUIRED';
+			if (!req.body.variables.dark) throw 'DARK_THEME_VARIABLES_REQUIRED';
+			if (!req.body.variables.light)
+				throw 'LIGHT_THEME_VARIABLES_REQUIRED';
+
+			const instance = new Project();
+			const loadRes = await instance.load(id);
+			if (!loadRes.status) throw 'ERROR_LOADING_INSTANCE';
+
+			const response = await instance.setTheme({
+				dark: req.body.variables.dark,
+				light: req.body.variables.light,
+			});
+			if (!response.status) throw response.error;
+
+			return res.status(200).json(response);
+		} catch (error) {
+			console.error('ERROR: /theme/variables', error);
+			return res.status(500).send({ status: false, error });
+		}
+	};
+
 	init = (app: Application) => {
 		app.post('/project', this.setup);
+		app.post('/project/:id/theme/variables', this.setTheme);
 		app.get('/project/themes/template/:id', this.getThemesTemplate);
 		app.get('/project/:id', this.get);
 	};

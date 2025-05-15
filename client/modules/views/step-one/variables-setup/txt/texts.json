@@ -32,6 +32,43 @@
 		"errors": {
 			"somethingWentWrong": "Algo salio mal mientras intentabamos guardar las variables, contacte con un administrador inmediatamente",
 			"missingDark": "Especificar el tema oscuro es obligatorio",
+			"missingLight": "Especificar el tema claro es obligatorio",
+			"DARK_THEME_VARIABLES_REQUIRED": "Especificar el tema oscuro es obligatorio"
+		},
+		"success": "Variables guardadas con exito"
+	},
+	"en": {
+		"downloadTemplate": "Descargar template",
+		"labels": {
+			"light": {
+				"value": "Variables modo claro",
+				"info": "Aca se establecen las variables que definiran el estilo de la aplicacion en modo claro (El default), puede llegar a ser confuso entender como definirlas, por eso exsite el boton de 'Descargar template', este template tiene los valores por defecto que ya de por si trae el proyecto, puedes usar ChatGPT, Deepseek, Perplexity o cualquier otro LLM para generar la gama de colores en base a este template, pasale el template y especificale que quieres que en base a esa estructua de variables te gustaria que te ayudara a definir colores para una aplicacion con X o Y caracteristicas, por ejemplo, 'Una aplicacion para empresarios para el manejo de stock, debe ser una gamma de colores fria, azul o cyan como color predominante, toma en cuenta las mejores practicas en disenio UI/UX, los contrastes, las intenciones', el resultadoo esperado es un texto con la exactamente la misma estructura definida que el template descargado anteriormente, copie ese texto y pegelo aca, nuestro sistema se encargara de verificar que todo este bien por usted",
+				"placeholder": ""
+			},
+			"dark": {
+				"value": "Variables modo oscuro",
+				"info": "Aca se establecen las variables que definiran el estilo de la aplicacion en modo oscuro, puede llegar a ser confuso entender como definirlas, por eso exsite el boton de 'Descargar template', este template tiene los valores por defecto que ya de por si trae el proyecto, puedes usar ChatGPT, Deepseek, Perplexity o cualquier otro LLM para generar la gama de colores en base a este template, pasale el template y especificale que quieres que en base a esa estructua de variables te gustaria que te ayudara a definir colores para una aplicacion con X o Y caracteristicas, por ejemplo, 'Una aplicacion para empresarios para el manejo de stock, debe ser una gamma de colores fria, azul o cyan como color predominante, toma en cuenta las mejores practicas en disenio UI/UX, los contrastes', el resultadoo esperado es un texto con la exactamente la misma estructura definida que el template descargado anteriormente, copie ese texto y pegelo aca, nuestro sistema se encargara de verificar que todo este bien por usted",
+				"placeholder": ""
+			}
+		},
+		"modals": {
+			"reset": {
+				"title": "Estas seguro?",
+				"description": "Estas apunto de perder todo tu progreso, todo la informacion que has establecido sera eliminada permanentemente.",
+				"actions": {
+					"cancel": "Cancelar, no borrar",
+					"confirm": "Si, limpiar todo"
+				}
+			}
+		},
+		"actions": {
+			"save": "Guardar",
+			"back": "Volver",
+			"reset": "Limpiar"
+		},
+		"errors": {
+			"somethingWentWrong": "Algo salio mal mientras intentabamos guardar las variables, contacte con un administrador inmediatamente",
+			"missingDark": "Especificar el tema oscuro es obligatorio",
 			"missingLight": "Especificar el tema claro es obligatorio"
 		},
 		"success": "Variables guardadas con exito"

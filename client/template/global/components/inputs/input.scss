@@ -64,3 +64,10 @@ div.pui-textarea {
 		}
 	}
 }
+
+div.pui-textarea {
+	textarea {
+		max-height: 200px;
+		overflow: auto;
+	}
+}

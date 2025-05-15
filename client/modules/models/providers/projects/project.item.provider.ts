@@ -1,5 +1,5 @@
 import config from '@essential/builder/config';
-import { IProject } from '../../entities/projects/project.item';
+import { IProject, ISetTheme } from '../../entities/projects/project.item';
 
 export class ProjectItemProvider {
 	publish = async (params: IProject) => {
@@ -32,6 +32,21 @@ export class ProjectItemProvider {
 		});
 		const data = await response.json();
 
+		if (!data.status) return data;
 		return data.data;
+	};
+
+	setTheme = async (params: ISetTheme) => {
+		const url = `${config.params.server}/project/${params.id}/theme/variables`;
+		const response = await fetch(url, {
+			body: JSON.stringify(params),
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+
+		return data;
 	};
 }
