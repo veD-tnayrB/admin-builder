@@ -6,7 +6,6 @@ import { useVariablesSetupContext } from '../context';
 export const SyntaxErrors = () => {
 	const { store } = useVariablesSetupContext();
 
-	console.log('erroors syntax: ', store.syntaxError);
 	if (!store.syntaxError.errors.length) return null;
 
 	const messages = store.syntaxError.errors.map(err => {

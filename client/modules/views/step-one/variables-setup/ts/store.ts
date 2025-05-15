@@ -69,10 +69,7 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 				routing.pushState('/');
 				return;
 			}
-			console.log('response  ', response);
-			console.log('item:', this.#item);
 			this.#values = this.#item.variables;
-			console.log('vals: ', this.#values);
 			this.triggerEvent();
 		} catch (error) {
 			console.error(error);
@@ -89,7 +86,6 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 			this.syntaxError = { theme: 'dark', errors: [] };
 			this.triggerEvent();
 			const params = { variables: this.#values, id: this.#projectId };
-			console.log('params: ', params);
 			await this.#item.set(params);
 			const err = this.checkErrors();
 			if (err) {
@@ -100,7 +96,6 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 
 			const response = await this.#item.setTheme(params);
 
-			console.log('res: ', response);
 			if (!response.status) {
 				if (
 					response.error.hasOwnProperty('dark') ||
@@ -126,7 +121,6 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 						};
 
 						this.triggerEvent();
-						console.log('this.syntax error: ', this.syntaxError);
 					}
 
 					if (
@@ -189,7 +183,6 @@ export class StoreManager extends MultilanguageStore<StoreManager, ITexts> {
 			const res = await this.#item.getThemeTemplates({
 				id: this.#projectId,
 			});
-			console.log('downlooad template: ', res);
 		} catch (error) {
 			this.error = error;
 			console.error(error);

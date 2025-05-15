@@ -15,8 +15,6 @@ export class ScssContentManager {
 
 		try {
 			const content = await this.read(file);
-			console.log('content: ', content);
-
 			return {
 				status: true,
 				data: { file: content },
